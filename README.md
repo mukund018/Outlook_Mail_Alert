@@ -2,7 +2,7 @@
 
 An Android application designed for "Mission Critical" Outlook email monitoring. This app ensures you never miss important emails during specific hours (like late at night) by turning regular notifications into persistent, phone-call style ringtones.
 
-![App Background](app/src/main/res/drawable/background.png)
+
 
 ## 🚀 Key Features
 
