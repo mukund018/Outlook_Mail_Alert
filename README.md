@@ -2,8 +2,6 @@
 
 An Android application designed for "Mission Critical" Outlook email monitoring. This app ensures you never miss important emails during specific hours (like late at night) by turning regular notifications into persistent, phone-call style ringtones.
 
-![App Background](app/src/main/res/drawable/background.png)
-
 ## 🚀 Key Features
 
 - **Customizable Time Window**: Set specific hours (e.g., 12 AM to 6 AM) when you want the app to be active. It supports midnight crossover logic.
@@ -14,7 +12,7 @@ An Android application designed for "Mission Critical" Outlook email monitoring.
     - Battery Optimization status
 - **Activity Log**: A "Black Box" diagnostic log that shows exactly why the app did or did not ring for every incoming Outlook email.
 - **Ringtone Selection**: Full integration with the Android system ringtone picker.
-- **Material 3 UI**: Modern "Glassmorphism" interface designed for high readability over custom backgrounds.
+- **Dark Material 3 UI**: A permanently dark-themed interface with a subtle gradient background, color-coded status badges, and high-contrast text designed for readability in low light.
 - **Test Mode**: Immediate testing button to verify sound and vibration settings.
 
 ## 🛠 How It Works
@@ -46,7 +44,7 @@ To make this app "Mission Critical" reliable, follow these steps after installat
 1. Clone the repository.
 2. Open in **Android Studio**.
 3. Sync Gradle and build.
-4. (Optional) Replace `app/src/main/res/drawable/background.png` with your own background image.
+4. (Optional) Tweak the palette in `app/src/main/res/values/colors.xml` to customize the dark theme.
 
 ## ⚠️ Important Note on Spam
 
