@@ -155,41 +155,54 @@ class MainActivity : AppCompatActivity() {
         updateReliabilityDashboard()
     }
 
+    private enum class Status { OK, WARN, BAD }
+
+    private fun setStatusIcon(view: TextView, status: Status) {
+        val (bg, fg, symbol) = when (status) {
+            Status.OK -> Triple(R.drawable.bg_status_ok, R.color.status_ok_fg, "✓")
+            Status.WARN -> Triple(R.drawable.bg_status_warn, R.color.status_warn_fg, "!")
+            Status.BAD -> Triple(R.drawable.bg_status_bad, R.color.status_bad_fg, "✕")
+        }
+        view.setBackgroundResource(bg)
+        view.setTextColor(ContextCompat.getColor(this, fg))
+        view.text = symbol
+    }
+
     private fun updateReliabilityDashboard() {
         val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         // 1. Notification Listener
         val isListenerEnabled = isNotificationServiceEnabled()
-        tvIconNotificationAccess.text = if (isListenerEnabled) "✅" else "❌"
+        setStatusIcon(tvIconNotificationAccess, if (isListenerEnabled) Status.OK else Status.BAD)
 
         // 2. Post Notifications
         val isPostEnabled = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
         } else true
-        tvIconPostNotifications.text = if (isPostEnabled) "✅" else "❌"
+        setStatusIcon(tvIconPostNotifications, if (isPostEnabled) Status.OK else Status.BAD)
 
         // 3. Notification Channel
         val isChannelEnabled = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = nm.getNotificationChannel(OutlookNotificationListener.CHANNEL_ID)
             channel == null || channel.importance != NotificationManager.IMPORTANCE_NONE
         } else true
-        tvIconChannelStatus.text = if (isChannelEnabled) "✅" else "❌"
+        setStatusIcon(tvIconChannelStatus, if (isChannelEnabled) Status.OK else Status.BAD)
 
         // 4. Do Not Disturb
         val isDndOff = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             nm.currentInterruptionFilter == NotificationManager.INTERRUPTION_FILTER_ALL
         } else true
-        tvIconDNDStatus.text = if (isDndOff) "✅" else "❌"
+        setStatusIcon(tvIconDNDStatus, if (isDndOff) Status.OK else Status.BAD)
 
         // 5. Ringer Volume
         val am = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         val isRingerOn = am.ringerMode == AudioManager.RINGER_MODE_NORMAL
-        tvIconRingerVolume.text = if (isRingerOn) "✅" else "⚠️"
+        setStatusIcon(tvIconRingerVolume, if (isRingerOn) Status.OK else Status.WARN)
 
         // 6. Battery Optimization
         val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
         val isIgnoringBattery = pm.isIgnoringBatteryOptimizations(packageName)
-        tvIconBatteryOptimization.text = if (isIgnoringBattery) "✅" else "⚠️"
+        setStatusIcon(tvIconBatteryOptimization, if (isIgnoringBattery) Status.OK else Status.WARN)
 
         // Update Logs
         val logs = timePrefs.eventLogs
@@ -240,11 +253,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateRingtoneButtonText() {
         val uri = timePrefs.ringtoneUri
-        if (uri != null) {
-            val ringtone = RingtoneManager.getRingtone(this, Uri.parse(uri))
-            btnSelectRingtone.text = "Ringtone: ${ringtone.getTitle(this)}"
+        val ringtone = uri?.let { RingtoneManager.getRingtone(this, Uri.parse(it)) }
+        btnSelectRingtone.text = if (ringtone != null) {
+            "Ringtone: ${ringtone.getTitle(this)}"
         } else {
-            btnSelectRingtone.text = "Select Ringtone"
+            "Select Ringtone"
         }
     }
 }

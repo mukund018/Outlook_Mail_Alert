@@ -4,26 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_app_gradient"
     tools:context=".MainActivity">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/background"
-        android:contentDescription="Background Image" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent">
+        android:background="@color/toolbar_bg"
+        app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:title="Outlook Ring Alert"
-            android:background="#4DFFFFFF"
+            android:titleTextColor="@color/text_primary"
+            android:background="@color/toolbar_bg"
             app:titleCentered="true" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -31,6 +27,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -39,10 +36,41 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Spacer to reveal the face in the background -->
-            <View
+            <!-- Hero header -->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="220dp" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:paddingTop="16dp"
+                android:paddingBottom="24dp">
+
+                <TextView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:background="@drawable/bg_icon_chip"
+                    android:gravity="center"
+                    android:text="🔔"
+                    android:textSize="28sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Never Miss an Outlook Call"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Loud alerts for Outlook calls, even on silent"
+                    android:textColor="@color/text_secondary"
+                    android:textAppearance="?attr/textAppearanceBodyMedium" />
+
+            </LinearLayout>
 
             <!-- Master Control Card -->
             <com.google.android.material.card.MaterialCardView
@@ -51,8 +79,8 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="0dp"
-                app:cardBackgroundColor="#33FFFFFF"
-                app:strokeColor="#66FFFFFF"
+                app:cardBackgroundColor="@color/surface_card"
+                app:strokeColor="@color/surface_stroke"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -72,18 +100,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="App Status"
-                            android:textColor="#000000"
-                            android:shadowColor="#40000000"
-                            android:shadowDx="1"
-                            android:shadowDy="1"
-                            android:shadowRadius="1"
+                            android:textColor="@color/text_primary"
                             android:textAppearance="?attr/textAppearanceTitleLarge" />
 
                         <TextView
                             android:id="@+id/tvAppStatusDescription"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
                             android:text="App is currently monitoring"
+                            android:textColor="@color/text_secondary"
                             android:textAppearance="?attr/textAppearanceBodyMedium" />
                     </LinearLayout>
 
@@ -104,8 +130,8 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="0dp"
-                app:cardBackgroundColor="#33FFFFFF"
-                app:strokeColor="#66FFFFFF"
+                app:cardBackgroundColor="@color/surface_card"
+                app:strokeColor="@color/surface_stroke"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -118,13 +144,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Reliability Checklist"
-                        android:textColor="#000000"
-                        android:shadowColor="#40000000"
-                        android:shadowDx="1"
-                        android:shadowDy="1"
-                        android:shadowRadius="1"
+                        android:textColor="@color/text_primary"
                         android:textAppearance="?attr/textAppearanceTitleLarge"
-                        android:layout_marginBottom="12dp" />
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tap any item marked ✕ to fix it"
+                        android:textColor="@color/text_tertiary"
+                        android:textAppearance="?attr/textAppearanceLabelMedium"
+                        android:layout_marginBottom="8dp" />
 
                     <!-- Notification Access -->
                     <LinearLayout
@@ -133,22 +163,33 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:focusable="true"
+                        android:background="?attr/selectableItemBackground"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingVertical="8dp">
+                        android:paddingVertical="10dp">
                         <TextView
                             android:id="@+id/tvIconNotificationAccess"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="❌"
-                            android:layout_marginEnd="12dp" />
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:background="@drawable/bg_status_bad"
+                            android:text="✕"
+                            android:textColor="@color/status_bad_fg"
+                            android:layout_marginEnd="14dp" />
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Notification Listener Access"
+                            android:textColor="@color/text_primary"
                             android:textAppearance="?attr/textAppearanceBodyLarge" />
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/divider" />
 
                     <!-- Post Notifications -->
                     <LinearLayout
@@ -157,22 +198,33 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:focusable="true"
+                        android:background="?attr/selectableItemBackground"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingVertical="8dp">
+                        android:paddingVertical="10dp">
                         <TextView
                             android:id="@+id/tvIconPostNotifications"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="❌"
-                            android:layout_marginEnd="12dp" />
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:background="@drawable/bg_status_bad"
+                            android:text="✕"
+                            android:textColor="@color/status_bad_fg"
+                            android:layout_marginEnd="14dp" />
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Post Notification Permission"
+                            android:textColor="@color/text_primary"
                             android:textAppearance="?attr/textAppearanceBodyLarge" />
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/divider" />
 
                     <!-- Notification Channel -->
                     <LinearLayout
@@ -181,22 +233,33 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:focusable="true"
+                        android:background="?attr/selectableItemBackground"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingVertical="8dp">
+                        android:paddingVertical="10dp">
                         <TextView
                             android:id="@+id/tvIconChannelStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="❌"
-                            android:layout_marginEnd="12dp" />
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:background="@drawable/bg_status_bad"
+                            android:text="✕"
+                            android:textColor="@color/status_bad_fg"
+                            android:layout_marginEnd="14dp" />
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Alert Channel (Must be ON)"
+                            android:textColor="@color/text_primary"
                             android:textAppearance="?attr/textAppearanceBodyLarge" />
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/divider" />
 
                     <!-- Do Not Disturb -->
                     <LinearLayout
@@ -205,22 +268,33 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:focusable="true"
+                        android:background="?attr/selectableItemBackground"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingVertical="8dp">
+                        android:paddingVertical="10dp">
                         <TextView
                             android:id="@+id/tvIconDNDStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="❌"
-                            android:layout_marginEnd="12dp" />
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:background="@drawable/bg_status_bad"
+                            android:text="✕"
+                            android:textColor="@color/status_bad_fg"
+                            android:layout_marginEnd="14dp" />
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Do Not Disturb (Must be OFF)"
+                            android:textColor="@color/text_primary"
                             android:textAppearance="?attr/textAppearanceBodyLarge" />
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/divider" />
 
                     <!-- Ringer Volume -->
                     <LinearLayout
@@ -229,22 +303,33 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:focusable="true"
+                        android:background="?attr/selectableItemBackground"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingVertical="8dp">
+                        android:paddingVertical="10dp">
                         <TextView
                             android:id="@+id/tvIconRingerVolume"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="❌"
-                            android:layout_marginEnd="12dp" />
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:background="@drawable/bg_status_bad"
+                            android:text="✕"
+                            android:textColor="@color/status_bad_fg"
+                            android:layout_marginEnd="14dp" />
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Ringer Volume (Must be ON)"
+                            android:textColor="@color/text_primary"
                             android:textAppearance="?attr/textAppearanceBodyLarge" />
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/divider" />
 
                     <!-- Battery Optimization -->
                     <LinearLayout
@@ -253,30 +338,28 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:focusable="true"
+                        android:background="?attr/selectableItemBackground"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingVertical="8dp">
+                        android:paddingVertical="10dp">
                         <TextView
                             android:id="@+id/tvIconBatteryOptimization"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="❌"
-                            android:layout_marginEnd="12dp" />
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:background="@drawable/bg_status_bad"
+                            android:text="✕"
+                            android:textColor="@color/status_bad_fg"
+                            android:layout_marginEnd="14dp" />
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Battery Optimization Disabled"
+                            android:textColor="@color/text_primary"
                             android:textAppearance="?attr/textAppearanceBodyLarge" />
                     </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="Tap any ❌ to fix."
-                        android:textAppearance="?attr/textAppearanceLabelSmall"
-                        android:alpha="0.7" />
 
                 </LinearLayout>
 
@@ -286,11 +369,11 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="16dp"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="0dp"
-                app:cardBackgroundColor="#33FFFFFF"
-                app:strokeColor="#66FFFFFF"
+                app:cardBackgroundColor="@color/surface_card"
+                app:strokeColor="@color/surface_stroke"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -303,11 +386,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Active Ringing Hours"
-                        android:textColor="#000000"
-                        android:shadowColor="#40000000"
-                        android:shadowDx="1"
-                        android:shadowDy="1"
-                        android:shadowRadius="1"
+                        android:textColor="@color/text_primary"
                         android:textAppearance="?attr/textAppearanceTitleLarge"
                         android:layout_marginBottom="4dp" />
 
@@ -315,6 +394,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="App will only ring during these hours."
+                        android:textColor="@color/text_secondary"
                         android:textAppearance="?attr/textAppearanceBodyMedium"
                         android:layout_marginBottom="16dp" />
 
@@ -330,12 +410,15 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:textColor="@color/text_primary"
+                            app:strokeColor="@color/surface_stroke"
                             android:text="From: 12:00 AM" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=" to "
+                            android:textColor="@color/text_secondary"
                             android:layout_marginHorizontal="8dp"
                             android:textAppearance="?attr/textAppearanceBodyLarge" />
 
@@ -345,6 +428,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:textColor="@color/text_primary"
+                            app:strokeColor="@color/surface_stroke"
                             android:text="To: 06:00 AM" />
 
                     </LinearLayout>
@@ -355,6 +440,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:textColor="@color/text_primary"
+                        app:strokeColor="@color/surface_stroke"
+                        app:iconTint="@color/text_primary"
                         android:text="Select Ringtone"
                         app:icon="@android:drawable/ic_menu_agenda" />
 
@@ -365,7 +453,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="Test Ringing Now"
-                        android:backgroundTint="#1A000000"
+                        android:backgroundTint="@color/surface_card_alt"
+                        android:textColor="@color/accent_primary"
+                        app:iconTint="@color/accent_primary"
                         app:icon="@android:drawable/ic_lock_silent_mode_off" />
 
                 </LinearLayout>
@@ -379,8 +469,8 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="0dp"
-                app:cardBackgroundColor="#33FFFFFF"
-                app:strokeColor="#66FFFFFF"
+                app:cardBackgroundColor="@color/surface_card"
+                app:strokeColor="@color/surface_stroke"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -393,11 +483,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Recent Activity Log"
-                        android:textColor="#000000"
-                        android:shadowColor="#40000000"
-                        android:shadowDx="1"
-                        android:shadowDy="1"
-                        android:shadowRadius="1"
+                        android:textColor="@color/text_primary"
                         android:textAppearance="?attr/textAppearanceTitleLarge"
                         android:layout_marginBottom="8dp" />
 
@@ -406,6 +492,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="No recent activity"
+                        android:textColor="@color/text_secondary"
                         android:textAppearance="?attr/textAppearanceBodyMedium"
                         android:lineSpacingExtra="4dp" />
 
@@ -418,9 +505,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Device specific tips: dontkillmyapp.com"
+                android:textColor="@color/text_tertiary"
                 android:textAppearance="?attr/textAppearanceLabelSmall"
-                android:layout_marginBottom="16dp"
-                android:alpha="0.6" />
+                android:layout_marginBottom="16dp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
