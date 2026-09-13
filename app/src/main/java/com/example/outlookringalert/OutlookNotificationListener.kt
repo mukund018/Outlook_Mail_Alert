@@ -62,12 +62,18 @@ class OutlookNotificationListener : NotificationListenerService() {
                     return
                 }
 
-                if (!timePrefs.isCurrentlyInWindow()) {
-                    timePrefs.addLog("Ignored (Outside Window)")
+                if (timePrefs.isAlwaysRingModeEnabled) {
+                    timePrefs.addLog("✅ Alert Triggered (24/7 Always Ring Mode)")
+                    triggerCallAlert()
                     return
                 }
 
-                timePrefs.addLog("✅ Alert Triggered")
+                if (!timePrefs.isCurrentlyInWindow()) {
+                    timePrefs.addLog("Ignored (Outside Scheduled Hours)")
+                    return
+                }
+
+                timePrefs.addLog("✅ Alert Triggered (Scheduled Window)")
                 triggerCallAlert()
             }
         }

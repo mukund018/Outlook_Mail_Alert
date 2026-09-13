@@ -32,6 +32,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnSelectRingtone: Button
     private lateinit var switchAppEnabled: MaterialSwitch
     private lateinit var tvAppStatusDescription: TextView
+    private lateinit var switchAlwaysRing: MaterialSwitch
+    private lateinit var tvAlwaysRingModeDescription: TextView
     private lateinit var tvEventLogs: TextView
 
     private val ringtonePickerLauncher = registerForActivityResult(
@@ -66,6 +68,8 @@ class MainActivity : AppCompatActivity() {
         btnSelectRingtone = findViewById(R.id.btnSelectRingtone)
         switchAppEnabled = findViewById(R.id.switchAppEnabled)
         tvAppStatusDescription = findViewById(R.id.tvAppStatusDescription)
+        switchAlwaysRing = findViewById(R.id.switchAlwaysRing)
+        tvAlwaysRingModeDescription = findViewById(R.id.tvAlwaysRingModeDescription)
         tvEventLogs = findViewById(R.id.tvEventLogs)
 
         tvIconNotificationAccess = findViewById(R.id.tvIconNotificationAccess)
@@ -83,6 +87,14 @@ class MainActivity : AppCompatActivity() {
         switchAppEnabled.setOnCheckedChangeListener { _, isChecked ->
             timePrefs.isAppEnabled = isChecked
             updateAppStatusDescription(isChecked)
+        }
+
+        switchAlwaysRing.isChecked = timePrefs.isAlwaysRingModeEnabled
+        updateAlwaysRingModeDescription()
+
+        switchAlwaysRing.setOnCheckedChangeListener { _, isChecked ->
+            timePrefs.isAlwaysRingModeEnabled = isChecked
+            updateAlwaysRingModeDescription()
         }
 
         updateTimeButtons()
@@ -241,6 +253,25 @@ class MainActivity : AppCompatActivity() {
             if (timePrefs.endHour % 12 == 0) 12 else timePrefs.endHour % 12,
             timePrefs.endMinute,
             if (timePrefs.endHour < 12) "AM" else "PM")
+
+        updateAlwaysRingModeDescription()
+    }
+
+    private fun formatTime(hour: Int, minute: Int): String {
+        return String.format(Locale.getDefault(), "%02d:%02d %s",
+            if (hour % 12 == 0) 12 else hour % 12,
+            minute,
+            if (hour < 12) "AM" else "PM")
+    }
+
+    private fun updateAlwaysRingModeDescription() {
+        tvAlwaysRingModeDescription.text = if (timePrefs.isAlwaysRingModeEnabled) {
+            "Mode: Ringing for ALL emails 24/7 (Timer Bypassed)"
+        } else {
+            val startTime = formatTime(timePrefs.startHour, timePrefs.startMinute)
+            val endTime = formatTime(timePrefs.endHour, timePrefs.endMinute)
+            "Mode: Scheduled (Ringing only between $startTime and $endTime)"
+        }
     }
 
     private fun updateAppStatusDescription(isEnabled: Boolean) {

@@ -27,6 +27,10 @@ class TimePreferences(context: Context) {
         get() = prefs.getBoolean("is_app_enabled", true)
         set(value) = prefs.edit().putBoolean("is_app_enabled", value).apply()
 
+    var isAlwaysRingModeEnabled: Boolean
+        get() = prefs.getBoolean("is_always_ring_mode_enabled", false)
+        set(value) = prefs.edit().putBoolean("is_always_ring_mode_enabled", value).apply()
+
     var eventLogs: String
         get() = prefs.getString("event_logs", "") ?: ""
         set(value) = prefs.edit().putString("event_logs", value).apply()
