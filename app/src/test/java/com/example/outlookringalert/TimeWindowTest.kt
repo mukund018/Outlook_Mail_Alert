@@ -7,7 +7,7 @@ import java.util.Calendar
 
 /**
  * Since TimePreferences uses Calendar.getInstance() internally, we'll create a testable version
- * of the logic to verify the window calculations.
+ * of the logic to verify the windowcalculations.
  */
 class TimeWindowTest {
 
